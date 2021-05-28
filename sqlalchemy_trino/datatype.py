@@ -142,8 +142,9 @@ def parse_sqltype(type_str: str) -> TypeEngine:
     elif type_name == "row":
         attr_types: Dict[str, SQLType] = {}
         for attr_str in split(type_opts):
-            name, attr_type_str = split(attr_str.strip(), delimiter=' ')
-            attr_type = parse_sqltype(attr_type_str)
+            attr_type_str = split(attr_str.strip(), delimiter=' ')
+            name = next(attr_type_str)
+            attr_type = parse_sqltype(' '.join(attr_type_str))
             attr_types[name] = attr_type
         return ROW(attr_types)
 
